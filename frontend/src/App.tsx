@@ -1,30 +1,32 @@
 import {Routes, Route} from "react-router-dom";
-import Home from "./pages/Home.tsx";
-import Collection from "./pages/Collection.tsx";
-import Contact from "./pages/Contact.tsx";
-import Product from "./pages/Product.tsx";
-import About from "./pages/About.tsx";
-import Cart from "./pages/Cart.tsx";
-import Login from "./pages/Login.tsx";
-import PlaceOrder from "./pages/PlaceOrder.tsx";
-import Orders from "./pages/Orders.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import CollectionPage from "./pages/CollectionPage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
+import ProductPage from "./pages/ProductPage.tsx";
+import AboutPage from "./pages/AboutPage.tsx";
+import CartPage from "./pages/CartPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import PlaceOrderPage from "./pages/PlaceOrderPage.tsx";
+import OrdersPage from "./pages/OrdersPage.tsx";
 import NavBar from "./components/NavBar.tsx";
+import Footer from "./components/Footer.tsx";
 
 const App = () => {
     return (
         <div className={"px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]"}>
-            <NavBar />
+            <NavBar/>
             <Routes>
-                <Route path={"/"} element={<Home />}></Route>
-                <Route path={"/collection"} element={<Collection />}></Route>
-                <Route path={"/about"} element={<About />}></Route>
-                <Route path={"/contact"} element={<Contact />}></Route>
-                <Route path={"/product/:productid"} element={<Product />}></Route>
-                <Route path={"/cart"} element={<Cart />}></Route>
-                <Route path={"/login"} element={<Login />}></Route>
-                <Route path={"/place-order"} element={<PlaceOrder />}></Route>
-                <Route path={"/orders"} element={<Orders />}></Route>
+                <Route path={"/"} element={<HomePage/>}></Route>
+                <Route path={"/collection"} element={<CollectionPage/>}></Route>
+                <Route path={"/about"} element={<AboutPage/>}></Route>
+                <Route path={"/contact"} element={<ContactPage/>}></Route>
+                <Route path={"/product/:productid"} element={<ProductPage/>}></Route>
+                <Route path={"/cart"} element={<CartPage/>}></Route>
+                <Route path={"/login"} element={<LoginPage/>}></Route>
+                <Route path={"/place-order"} element={<PlaceOrderPage/>}></Route>
+                <Route path={"/orders"} element={<OrdersPage/>}></Route>
             </Routes>
+            <Footer/>
         </div>
     )
 }
