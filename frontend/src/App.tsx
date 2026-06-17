@@ -10,11 +10,13 @@ import PlaceOrderPage from "./pages/PlaceOrderPage.tsx";
 import OrdersPage from "./pages/OrdersPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 import Footer from "./components/Footer.tsx";
+import SearchBar from "./components/SearchBar.tsx";
 
 const App = () => {
     return (
         <div className={"px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]"}>
             <NavBar/>
+            <SearchBar/>
             <Routes>
                 <Route path={"/"} element={<HomePage/>}></Route>
                 <Route path={"/collection"} element={<CollectionPage/>}></Route>

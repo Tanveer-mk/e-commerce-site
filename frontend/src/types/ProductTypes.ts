@@ -15,4 +15,8 @@ export interface ShopStore {
     products: Product[],
     currency: string,
     delivery_fee: number,
+    search: string,
+    setSearch: (search: string) => void;
+    showSearch: boolean;
+    setShowSearch: (show: boolean) => void;
 }
