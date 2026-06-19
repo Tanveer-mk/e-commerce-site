@@ -11,6 +11,13 @@ export interface Product {
     bestseller: boolean
 }
 
+// export interface cartItem {
+//     [productId: string]: {
+//         [size: string]: number,
+//     }
+// }
+
+
 export interface ShopStore {
     products: Product[],
     currency: string,
@@ -19,4 +26,13 @@ export interface ShopStore {
     setSearch: (search: string) => void;
     showSearch: boolean;
     setShowSearch: (show: boolean) => void;
+    cartItems: {
+        [productId: string]: {
+            [size: string]: number,
+        }
+    }
+    // setCartItems: () => void;
+    addToCart: (itemId: string, size: string) => void;
+    // cartCount: number;
+    getCartCount: () => number;
 }

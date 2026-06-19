@@ -39,9 +39,11 @@ const CollectionPage = () => {
         if (category.length > 0) {
             p = p.filter(item => (category.includes(item.category)))
         }
+
         if (subCategory.length > 0) {
             p = p.filter(item => (subCategory.includes(item.subCategory)))
         }
+
         setFilterProducts(p);
     }
 
@@ -50,7 +52,6 @@ const CollectionPage = () => {
         switch (sortType) {
             case "low-high":
                 setFilterProducts(p.sort((a, b) => a.price - b.price))
-                console.log(sortType);
                 break;
             case "high-low":
                 setFilterProducts(p.sort((a, b) => b.price - a.price))
