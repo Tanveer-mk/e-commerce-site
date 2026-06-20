@@ -3,7 +3,7 @@ import {products} from "../assets/frontend_assets/assets.ts";
 import {type ShopStore} from "../types/ProductTypes.ts";
 import {toast} from "react-toastify";
 
-export const useShopStore = create<ShopStore>((set) => (
+export const useShopStore = create<ShopStore>((set, get) => (
     {
         products,
         currency: "$",
@@ -15,14 +15,14 @@ export const useShopStore = create<ShopStore>((set) => (
         cartItems: {},
         // setCartItems: () => {
         // },
-        addToCart: (itemId, size) => (set(state => {
+        addToCart: (itemId, size) => {
             if (!size) {
                 console.log(size);
                 toast.error("Select product size");
-                return state;
+                return get();
             }
 
-            let cartData = structuredClone(state.cartItems);
+            let cartData = structuredClone(get().cartItems);
 
             if (cartData[itemId]) {
                 if (cartData[itemId][size]) {
@@ -35,11 +35,11 @@ export const useShopStore = create<ShopStore>((set) => (
                 cartData[itemId][size] = 1;
             }
 
-            return {cartItems: cartData};
-        })),
+            return set({cartItems: cartData});
+        },
 
         getCartCount: () => {
-            const {cartItems} = useShopStore.getState();
+            const cartItems = get().cartItems;
             let total = 0;
             for (const productId in cartItems) {
                 for (const size in cartItems[productId]) {
@@ -47,6 +47,31 @@ export const useShopStore = create<ShopStore>((set) => (
                 }
             }
             return total;
-        }
+        },
+
+        updateQuantity: (itemId, size, quantity) => {
+            let cartData = structuredClone(get().cartItems);
+            cartData[itemId][size] = quantity;
+            return set({cartItems: cartData})
+        },
+
+        getCartAmount: () => {
+            let totalAmount = 0;
+            let cartData = get().cartItems;
+            for (const items in cartData) {
+                let itemInfo = get().products.find((product) => product._id === items);
+                if (itemInfo) {
+                    for (const item in cartData[items]) {
+                        if (cartData[items][item] > 0) {
+                            totalAmount += itemInfo.price * cartData[items][item];
+                        }
+                    }
+                } else {
+                    console.error("product doesn't exist")
+                }
+            }
+            return totalAmount
+        },
+
     }
 ))

@@ -8,18 +8,16 @@ import {toast, ToastContainer} from 'react-toastify';
 
 const ProductPage = () => {
     const {productId} = useParams();
-    const {products, currency, addToCart, cartItems, getCartCount} = useShopStore();
-    const [productData, setProductData] = useState<Product>()
+    const {products, currency, addToCart} = useShopStore();
+    const [productData, setProductData] = useState<Product | undefined>()
     const [image, setImage] = useState("");
     const [size, setSize] = useState("")
 
     const fetchProductData = async () => {
-
-        products.map(product => {
+        products.find(product => {
             if (product._id === productId) {
                 setProductData(product);
                 setImage(product.image[0]);
-                return;
             }
         })
     }
@@ -28,9 +26,6 @@ const ProductPage = () => {
         void fetchProductData();
     }, [products, productId]);
 
-    useEffect(() => {
-        console.log(cartItems)
-    }, [cartItems]);
 
     return productData ? (
         <div className={"border-t-2 border-gray-200 pt-10 transition-opacity ease-in duration-500 opacity-100 "}>
@@ -72,7 +67,7 @@ const ProductPage = () => {
                                 <button onClick={() => {
                                     setSize(item);
                                 }}
-                                        className={`py-2 px-4 bg-gray-100 border-gray-100 border ${size === item && "border-orange-500"}`}
+                                        className={`py-2 px-4 bg-gray-100 cursor-pointer border-gray-100 border ${size === item && "border-orange-500"}`}
                                         key={index}>{item}</button>
                             ))}
                         </div>
@@ -80,9 +75,8 @@ const ProductPage = () => {
                     <button onClick={() => {
                         if (productData?.sizes.includes(size)) {
                             addToCart(productData?._id, size)
-                            getCartCount();
                         } else toast.error("Select product size")
-                    }} className={"bg-black text-white px-8 py-3 text-sm active:bg-gray-700"}>ADD TO CART
+                    }} className={"bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer"}>ADD TO CART
                     </button>
                     <hr className={"mt-8 sm:w-4/5 text-gray-300"}/>
                     <div className={"text-sm text-gray-500 mt-5 flex flex-col gap-1"}>

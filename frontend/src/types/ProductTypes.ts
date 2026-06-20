@@ -11,11 +11,11 @@ export interface Product {
     bestseller: boolean
 }
 
-// export interface cartItem {
-//     [productId: string]: {
-//         [size: string]: number,
-//     }
-// }
+export interface CartData {
+    _id: string,
+    size: string,
+    quantity: number,
+}
 
 
 export interface ShopStore {
@@ -35,4 +35,6 @@ export interface ShopStore {
     addToCart: (itemId: string, size: string) => void;
     // cartCount: number;
     getCartCount: () => number;
+    updateQuantity: (itemId: string, size: string, quantity: number) => void;
+    getCartAmount: () => number;
 }

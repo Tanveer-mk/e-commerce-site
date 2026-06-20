@@ -13,7 +13,7 @@ const CollectionPage = () => {
     const [sortType, setSortType] = useState("relevance");
     const [filterProducts, setFilterProducts] = useState<Product[]>([])
 
-    const categoryToggle = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const categoryToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (category.includes(e.target.value)) {
             setCategory(prev => (prev.filter(item => item !== e.target.value)))
         } else {
@@ -21,7 +21,7 @@ const CollectionPage = () => {
         }
     }
 
-    const subCategoryToggle = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+    const subCategoryToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (subCategory.includes(e.target.value)) {
             setSubCategory(prev => (prev.filter(item => item !== e.target.value)))
         } else {
@@ -68,7 +68,7 @@ const CollectionPage = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [category, subCategory, search, showSearch])
+    }, [products, category, subCategory, search, showSearch])
 
     return (
         <div className={"flex border-gray-200 flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t"}>
@@ -122,7 +122,7 @@ const CollectionPage = () => {
                     {/*    product sort*/}
                     <select onChange={(e) => (setSortType(e.target.value))}
                             className={"border-2 border-gray-300 text-sm px-2"}>
-                        <option value={"relevant"}>Sort by: Relevance</option>
+                        <option value={"relevance"}>Sort by: Relevance</option>
                         <option value={"low-high"}>Sort by: Low to High</option>
                         <option value={"high-low"}>Sort by: High to Low</option>
                     </select>
