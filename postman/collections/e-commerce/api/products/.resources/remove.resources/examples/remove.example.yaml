@@ -1,0 +1,18 @@
+$kind: http-example
+request:
+  url: http://localhost:5000/api/products/remove
+  method: POST
+  body:
+    type: json
+    content: "{\r
+
+      \    \"id\": \"6a3d47032a4ce1e3939a80f5\"\r
+
+      }"
+response:
+  statusCode: 200
+  statusText: OK
+  body:
+    type: json
+    content: ""
+order: 1782401768456

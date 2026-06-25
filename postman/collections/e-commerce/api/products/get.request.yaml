@@ -1,0 +1,13 @@
+$kind: http-request
+name: get
+url: http://localhost:5000/api/products/get
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"id\" : \"6a3d49f1994439483f77316\"\r
+
+    }"
+examples: .resources/get.resources/examples
+order: 2428695374463897

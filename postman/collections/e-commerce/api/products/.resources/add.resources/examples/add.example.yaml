@@ -1,0 +1,73 @@
+$kind: http-example
+request:
+  url: http://localhost:5000/api/products/add
+  method: POST
+  body:
+    type: formdata
+    content:
+      - type: text
+        key: name
+        value: boots
+        description: testing boots
+        disabled: false
+      - type: text
+        key: description
+        value: good boots
+        description: testing description
+        disabled: false
+      - type: text
+        key: price
+        value: "5000"
+        description: testing price
+        disabled: false
+      - type: text
+        key: category
+        value: footwear
+        description: testing category
+        disabled: false
+      - type: text
+        key: subCategory
+        value: winter
+        description: testing subcategory
+        disabled: false
+      - type: text
+        key: sizes
+        value: '["M", "L"]'
+        description: testing sizes
+        disabled: false
+      - type: text
+        key: bestseller
+        value: "true"
+        description: testing bestseller
+        disabled: false
+      - type: file
+        key: image1
+        src:
+          - /C:/Users/Tabsheer/Pictures/image.jpg
+        description: testing image1
+        disabled: false
+      - type: file
+        key: image2
+        src:
+          - /C:/Users/Tabsheer/Pictures/image1.jpg
+        description: testing image2
+        disabled: false
+      - type: file
+        key: image3
+        src:
+          - /C:/Users/Tabsheer/Pictures/image2.jpg
+        description: testing image3
+        disabled: false
+      - type: file
+        key: image4
+        src:
+          - /C:/Users/Tabsheer/Pictures/image3.jpg
+        description: testing image4
+        disabled: false
+response:
+  statusCode: 200
+  statusText: OK
+  body:
+    type: json
+    content: ""
+order: 1782367091834

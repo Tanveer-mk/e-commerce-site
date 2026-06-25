@@ -1,0 +1,18 @@
+$kind: http-example
+request:
+  url: http://localhost:5000/api/products/get
+  method: POST
+  body:
+    type: json
+    content: "{\r
+
+      \    \"id\" : \"6a3d49f1994439483f7731e6\"\r
+
+      }"
+response:
+  statusCode: 200
+  statusText: OK
+  body:
+    type: json
+    content: ""
+order: 1782401811638
