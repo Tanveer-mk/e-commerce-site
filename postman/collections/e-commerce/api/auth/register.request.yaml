@@ -1,0 +1,16 @@
+$kind: http-request
+url: http://localhost:5000/api/auth/register
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\": \"Tanveeruddin\",\r
+
+    \    \"email\": \"tanveersfb@gmail.com\",\r
+
+    \    \"password\": \"Greenchilli123\"\r
+
+    }"
+examples: .resources/register.resources/examples
+order: 2000
