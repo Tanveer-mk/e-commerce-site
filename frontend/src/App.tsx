@@ -8,14 +8,14 @@ import CartPage from "./pages/CartPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import PlaceOrderPage from "./pages/PlaceOrderPage.tsx";
 import OrdersPage from "./pages/OrdersPage.tsx";
-import NavBar from "./components/NavBar.tsx";
+import Navbar from "./components/Navbar.tsx";
 import Footer from "./components/Footer.tsx";
 import SearchBar from "./components/SearchBar.tsx";
 
 const App = () => {
     return (
         <div className={"px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]"}>
-            <NavBar/>
+            <Navbar/>
             <SearchBar/>
             <Routes>
                 <Route path={"/"} element={<HomePage/>}></Route>

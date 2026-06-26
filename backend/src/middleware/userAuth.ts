@@ -11,8 +11,8 @@ export const userAuth = async (req: Request, res: Response, next: NextFunction) 
                 message: 'Unauthorized, login again'
             });
         } else {
-            const decoded = jwt.verify(token, String(process.env.JWT_SECRET));
-            const exists = await userModel.exists({_id: decoded});
+            const decoded = jwt.verify(token, String(process.env.JWT_SECRET)) as { id: string };
+            const exists = await userModel.exists({_id: decoded.id});
             if (!exists) {
                 return res.status(401).json({success: false, message: 'Authentication failed'});
             }

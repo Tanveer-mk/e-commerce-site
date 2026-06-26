@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/auth/verify-admin
+method: GET
+order: 2602896280521609
