@@ -17,7 +17,6 @@ export const useShopStore = create<ShopStore>((set, get) => (
         // },
         addToCart: (itemId, size) => {
             if (!size) {
-                console.log(size);
                 toast.error("Select product size");
                 return get();
             }

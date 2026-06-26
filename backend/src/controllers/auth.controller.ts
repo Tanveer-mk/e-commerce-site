@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel";
+import {genCookie} from "../utils/genCookie";
 
 const createToken = (id: string) => {
     const JWT_SECRET = String(process.env.JWT_SECRET);
@@ -10,7 +11,6 @@ const createToken = (id: string) => {
 }
 
 const userRegister = async (req: Request, res: Response) => {
-    console.log("userRegister called")
     try {
         const {name, email, password} = req.body;
 
@@ -33,10 +33,12 @@ const userRegister = async (req: Request, res: Response) => {
         const user = await newUser.save();
 
         const token = createToken(user._id);
-        res.status(201).json({success: true, token, user});
+        genCookie("token", token, res);
 
-    } catch (err: any) {
-        console.error("Error in backend/src/controllers/auth.controller.ts/userRegister: " + err.message);
+        res.status(201).json({success: true, user});
+
+    } catch (e: any) {
+        console.error("Error in backend/src/controllers/auth.controller.ts/userRegister: " + e.message);
         res.status(500).json({success: false, message: "Internal server error"});
     }
 }
@@ -56,18 +58,66 @@ const userLogin = async (req: Request, res: Response) => {
         }
 
         const token = createToken(user._id);
-        res.status(201).json({success: true, token, user});
 
-    } catch (err: any) {
+        genCookie("token", token, res);
+        res.status(201).json({success: true, user});
+
+    } catch (e: any) {
         res.status(500).json({success: false, message: "Internal server error"});
-        console.error("Error in backend/src/controllers/auth.controller.ts/userLogin: " + err.message);
+        console.error("Error in backend/src/controllers/auth.controller.ts/userLogin: " + e.message);
     }
 }
 
-
-const adminLogin = async (req: Request, res: Response) => {
-    //route for admin login
-    res.json("admin login");
+const userLogout = async (req: Request, res: Response) => {
+    try {
+        if (req.cookies.token) {
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "PRODUCTION",
+                sameSite: "lax"
+            });
+            res.status(200).json({success: true, message: "Logout successfully"});
+        } else {
+            res.status(401).json({success: false, message: "Unauthorized"});
+        }
+    } catch (e: any) {
+        res.status(500).json({success: false, message: "Internal server error"});
+        console.error("Error in backend/src/controllers/auth.controller.ts/userLogout: " + e.message);
+    }
+}
+const adminLogout = async (req: Request, res: Response) => {
+    try {
+        if (req.cookies.adminToken) {
+            res.clearCookie("adminToken", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "PRODUCTION",
+                sameSite: "lax"
+            });
+            res.status(200).json({success: true, message: "Logout successfully"});
+        } else {
+            res.status(401).json({success: false, message: "Unauthorized"});
+        }
+    } catch (e: any) {
+        res.status(500).json({success: false, message: "Internal server error"});
+        console.error("Error in backend/src/controllers/auth.controller.ts/adminLogout: " + e.message);
+    }
 }
 
-export {userRegister, userLogin, adminLogin};
+const adminLogin = async (req: Request, res: Response) => {
+    try {
+        const {email, password} = req.body;
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(email + password, String(process.env.JWT_SECRET));
+            genCookie("adminToken", token, res);
+            res.status(200).json({success: true, message: "Admin Login successfully"});
+        } else {
+            res.status(401).json({success: false, message: "Invalid credentials"});
+        }
+    } catch (e: any) {
+        res.status(500).json({success: false, message: "Internal server error"});
+        console.error("Error in backend/src/controllers/auth.controller.ts/adminLogin: " + e.message);
+    }
+
+}
+
+export {userRegister, userLogin, adminLogin, userLogout, adminLogout};

@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/auth/admin-logout
+method: POST
+order: 3524184979419725

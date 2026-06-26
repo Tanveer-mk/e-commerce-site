@@ -5,6 +5,7 @@ import connectDB from "./config/mongodb";
 import {connectCloudinary} from "./config/cloudinary";
 import {Request, Response} from 'express';
 import authRoutes from "./routes/auth.route";
+import cookieParser from "cookie-parser";
 import productRoutes from "./routes/product.route";
 
 // App config
@@ -16,6 +17,7 @@ void connectCloudinary();
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // API endpoints
 

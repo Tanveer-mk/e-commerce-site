@@ -1,4 +1,14 @@
 $kind: http-request
+name: admin-login
 url: http://localhost:5000/api/auth/admin-login
 method: POST
-order: 1107611627816419
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\" : \"foreveryou@admin.com\",\r
+
+    \    \"password\": \"qwerty123\"\r
+
+    }"
+order: 4000

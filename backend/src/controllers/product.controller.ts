@@ -30,7 +30,6 @@ const addProduct = async (req: Request, res: Response) => {
             })
         )
 
-        console.log(imagesUrl)
 
         const productData = {
             name,
@@ -45,9 +44,7 @@ const addProduct = async (req: Request, res: Response) => {
         }
 
         const newProduct = new productModel(productData)
-        const product = await newProduct.save();
-
-        console.log(product)
+        await newProduct.save();
 
         res.status(201).json({success: true, message: 'Product created successfully.'})
 
