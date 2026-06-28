@@ -30,7 +30,6 @@ const addProduct = async (req: Request, res: Response) => {
             })
         )
 
-
         const productData = {
             name,
             description,

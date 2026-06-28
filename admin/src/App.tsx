@@ -11,7 +11,7 @@ import {ToastContainer, Bounce} from "react-toastify";
 import Spinner from "./components/Spinner.tsx";
 
 export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
+export const currency = "$";
 const App = () => {
     const [token, setToken] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -49,9 +49,11 @@ const App = () => {
                         <div className={"w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base"}>
                             <Routes>
                                 <Route path="/" element={<Navigate to={"/add"}/>}/>
-                                <Route path={"/add"} element={<AddPage/>}/>
-                                <Route path={"/list"} element={<ListPage/>}/>
-                                <Route path={"/orders"} element={<OrdersPage/>}/>
+                                <Route path={"/add"} element={<AddPage setToken={setToken} setLoading={setLoading}/>}/>
+                                <Route path={"/list"}
+                                       element={<ListPage setToken={setToken} setLoading={setLoading}/>}/>
+                                <Route path={"/orders"}
+                                       element={<OrdersPage setToken={setToken} setLoading={setLoading}/>}/>
                             </Routes>
                         </div>
                     </div>

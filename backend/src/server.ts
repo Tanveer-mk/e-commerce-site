@@ -31,11 +31,6 @@ app.get('/', (req: Request, res: Response) => {
     res.send('index');
 })
 
-app.post("/test", (req: Request, res: Response) => {
-    res.json("test works");
-})
-
-
 app.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);
 })
