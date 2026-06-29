@@ -1,11 +1,17 @@
 import {create} from "zustand";
-import {products} from "../assets/frontend_assets/assets.ts";
-import {type ShopStore} from "../types/ProductTypes.ts";
+import {type ShopStore, type ProductDb} from "../types/ProductTypes.ts";
 import {toast} from "react-toastify";
+import axios from "axios";
+import {products as productsjs} from "../assets/frontend_assets/assets.ts";
 
 export const useShopStore = create<ShopStore>((set, get) => (
     {
-        products,
+        token: false,
+        setToken: (value) => {
+            return set({token: value})
+        },
+        backendURL: import.meta.env.VITE_BACKEND_URL,
+        products: [],
         currency: "$",
         delivery_fee: 10,
         search: "",
@@ -71,6 +77,21 @@ export const useShopStore = create<ShopStore>((set, get) => (
             }
             return totalAmount
         },
+
+        fetchProducts: async () => {
+            try {
+                const response = await axios.get(get().backendURL + "api/products/get-all", {withCredentials: true});
+                if (response.status === 200) {
+                    return set({products: response.data.products})
+                }
+            } catch (err: any) {
+                console.error("ShopStore.ts Error in fetching products: " + err.response.data.message);
+            } finally {
+                if (get().products.length === 0) {
+                    set({products: productsjs as ProductDb[]})
+                }
+            }
+        }
 
     }
 ))

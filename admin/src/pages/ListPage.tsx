@@ -4,19 +4,7 @@ import {BACKEND_URL, currency} from "../App.tsx";
 import {toast} from "react-toastify";
 import type {Product} from "../Types/Product.ts";
 
-interface ListPageProps {
-    setToken: React.Dispatch<React.SetStateAction<boolean>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const ListPage = ({setToken, setLoading}: ListPageProps) => {
-
-    useEffect(() => {
-        axios.get(BACKEND_URL + "api/auth/verify-admin", {withCredentials: true})
-            .then(() => setToken(true))
-            .catch(() => setToken(false))
-            .finally(() => setLoading(false));
-    }, []);
+const ListPage = ({setToken}: { setToken: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
     const [list, setList] = useState<Product[]>([])
 
@@ -27,6 +15,9 @@ const ListPage = ({setToken, setLoading}: ListPageProps) => {
                 setList(response.data.products)
             }
         } catch (err: any) {
+            if (err.response.status === 401) {
+                setToken(false)
+            }
             console.error("Error fetching list in ListPage: " + err.message);
             toast.error(err.response.data.message)
         }

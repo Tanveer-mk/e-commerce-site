@@ -4,7 +4,7 @@ import {useShopStore} from "../context/ShopStore.ts";
 import {type Product} from "../types/ProductTypes.ts";
 import {assets} from "../assets/frontend_assets/assets.ts";
 import RelatedProducts from "../components/RelatedProducts.tsx";
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 
 const ProductPage = () => {
     const {productId} = useParams();
@@ -29,7 +29,6 @@ const ProductPage = () => {
 
     return productData ? (
         <div className={"border-t-2 border-gray-200 pt-10 transition-opacity ease-in duration-500 opacity-100 "}>
-            <ToastContainer position="top-right"></ToastContainer>
             {/*Product data*/}
             <div className={"flex gap-12 flex-col sm:flex-row "}>
                 {/*    Product images*/}

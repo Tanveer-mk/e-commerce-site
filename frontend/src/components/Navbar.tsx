@@ -1,12 +1,25 @@
 import {assets} from "../assets/frontend_assets/assets.ts";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useShopStore} from "../context/ShopStore.ts";
+import axios from "axios";
 
 const Navbar = () => {
     const [visible, setVisible] = useState(false);
-    const {showSearch, setShowSearch, getCartCount} = useShopStore();
+    const {showSearch, setShowSearch, getCartCount, backendURL, setToken} = useShopStore();
     const cartCount = getCartCount();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await axios.post(backendURL + "api/auth/logout", {}, {withCredentials: true});
+            setToken(false);
+            navigate("/login");
+        } catch (err: any) {
+            setToken(false);
+            navigate("/login");
+        }
+    }
 
     return (
         <div className={"flex justify-between items-center py-5 font-medium"}>
@@ -46,7 +59,9 @@ const Navbar = () => {
                         <div className={"flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded"}>
                             <p className={"cursor-pointer hover:text-black"}>My Profile</p>
                             <p className={"cursor-pointer hover:text-black"}>Orders</p>
-                            <p className={"cursor-pointer hover:text-black"}>Logout</p>
+                            <p onClick={() => {
+                                void handleLogout()
+                            }} className={"cursor-pointer hover:text-black"}>Logout</p>
                         </div>
                     </div>
                 </div>

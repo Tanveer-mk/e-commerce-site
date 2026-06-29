@@ -14,6 +14,6 @@ Router.post("/add", adminAuth, upload.fields([
 
 Router.post("/remove", adminAuth, removeProduct);
 Router.post("/get", adminAuth, getProduct);
-Router.get("/get-all", adminAuth, getProducts);
+Router.get("/get-all", getProducts);
 
 export default Router;

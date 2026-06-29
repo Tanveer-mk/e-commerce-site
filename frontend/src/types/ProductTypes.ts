@@ -11,6 +11,12 @@ export interface Product {
     bestseller: boolean
 }
 
+export interface ProductDb extends Product {
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
 export interface CartData {
     _id: string,
     size: string,
@@ -19,7 +25,10 @@ export interface CartData {
 
 
 export interface ShopStore {
-    products: Product[],
+    token: boolean;
+    setToken: (value: boolean) => void;
+    backendURL: string,
+    products: ProductDb[],
     currency: string,
     delivery_fee: number,
     search: string,
@@ -37,4 +46,5 @@ export interface ShopStore {
     getCartCount: () => number;
     updateQuantity: (itemId: string, size: string, quantity: number) => void;
     getCartAmount: () => number;
+    fetchProducts: () => Promise<void>;
 }

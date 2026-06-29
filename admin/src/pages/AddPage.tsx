@@ -1,16 +1,11 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {BACKEND_URL} from "../App.tsx";
 import {assets} from "../assets/admin_assets/assets.ts";
 import {toast} from "react-toastify";
 import Spinner from "../components/Spinner.tsx";
 
-interface AddPageProps {
-    setToken: React.Dispatch<React.SetStateAction<boolean>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const AddPage = ({setToken, setLoading}: AddPageProps) => {
+const AddPage = ({setToken}: { setToken: React.Dispatch<React.SetStateAction<boolean>> }) => {
     const [pageLoading, setPageLoading] = useState(false)
 
     const [image1, setImage1] = useState<File | undefined>(undefined)
@@ -76,6 +71,9 @@ const AddPage = ({setToken, setLoading}: AddPageProps) => {
 
             toast.success("Added successfully.")
         } catch (err: any) {
+            if (err.response.status === 401) {
+                setToken(false)
+            }
             console.error("Error in adding product: " + err.message)
             toast.error("Error in adding product")
         } finally {
@@ -83,12 +81,6 @@ const AddPage = ({setToken, setLoading}: AddPageProps) => {
         }
     }
 
-    useEffect(() => {
-        axios.get(BACKEND_URL + "api/auth/verify-admin", {withCredentials: true})
-            .then(() => setToken(true))
-            .catch(() => setToken(false))
-            .finally(() => setLoading(false));
-    }, []);
     return pageLoading ? <Spinner/> : (
         <form onSubmit={onSubmitHandler} className="flex flex-col w-full items-start gap-3">
             <div className="">
